@@ -8,7 +8,7 @@
  * highlighter yellow that marks which words of a question map to which columns.
  */
 @theme inline {
-  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Young Serif", ui-serif, Georgia, serif;
   --font-sans: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Fragment Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
@@ -98,12 +98,13 @@
 
 /* Highlighter mark: a slightly tilted, rough-edged swipe behind text */
 @utility mark {
+  /* solid under every glyph; only the very edges soften, so dark text never lands on the page */
   background-image: linear-gradient(
     100deg,
-    transparent 0.4em,
-    color-mix(in oklab, var(--color-mark) 92%, transparent) 0.6em,
-    var(--color-mark) 92%,
-    transparent 100%
+    color-mix(in oklab, var(--color-mark) 80%, transparent) 0,
+    var(--color-mark) 0.35em,
+    var(--color-mark) calc(100% - 0.2em),
+    color-mix(in oklab, var(--color-mark) 70%, transparent) 100%
   );
   background-repeat: no-repeat;
   background-size: 100% 72%;
@@ -118,8 +119,10 @@
 
 @utility display {
   font-family: var(--font-display);
-  font-optical-sizing: auto;
-  letter-spacing: -0.035em;
+  /* Young Serif ships one weight: never let the browser fake a bold */
+  font-weight: 400 !important;
+  font-synthesis: none;
+  letter-spacing: -0.02em;
 }
 
 @utility eyebrow {
@@ -189,4 +192,24 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
+}
+
+/* Thermal receipt paper: always paper-coloured (it is paper), dashed rules, torn edge */
+.receipt {
+  background:
+    radial-gradient(circle at 20% 10%, rgba(0, 0, 0, 0.025), transparent 40%),
+    linear-gradient(180deg, #fdfcf8, #f7f5ee);
+  -webkit-mask:
+    linear-gradient(#000 0 0) top / 100% calc(100% - 9px) no-repeat,
+    conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) bottom / 14px 9px
+      repeat-x;
+  mask:
+    linear-gradient(#000 0 0) top / 100% calc(100% - 9px) no-repeat,
+    conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) bottom / 14px 9px
+      repeat-x;
+}
+.receipt-rule {
+  height: 1px;
+  background-image: linear-gradient(90deg, rgba(27, 27, 31, 0.55) 50%, transparent 50%);
+  background-size: 6px 1px;
 }

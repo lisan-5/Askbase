@@ -1,5 +1,6 @@
 import { HeadContent, Link, Outlet, Scripts, createRootRoute } from "@tanstack/react-router";
 import type { ReactNode } from "react";
+import { Receipt } from "@/components/landing/Receipt";
 import appCss from "../styles.css?url";
 
 const TITLE = "Askbase — ask your business data anything";
@@ -30,7 +31,7 @@ export const Route = createRootRoute({
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Fragment+Mono&family=Inter+Tight:wght@400;500;600&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Young+Serif&family=Fragment+Mono&family=Inter+Tight:wght@400;500;600&display=swap",
       },
       { rel: "stylesheet", href: appCss },
     ],
@@ -57,18 +58,29 @@ function Shell({ children }: { children: ReactNode }) {
 
 function NotFound() {
   return (
-    <main className="grid min-h-screen place-items-center bg-bg px-6 text-center">
-      <div>
-        <p className="eyebrow">404 · no rows returned</p>
-        <h1 className="display mt-4 text-6xl font-semibold">
-          <span className="mark">SELECT</span> * FROM pages
-          <br />
-          WHERE url = this
-        </h1>
-        <p className="mt-4 text-muted">That page doesn't exist — the query came back empty.</p>
+    <main className="grid min-h-screen place-items-center bg-bg px-6 py-16">
+      <div className="w-full max-w-[340px]">
+        <h1 className="sr-only">Page not found</h1>
+        <Receipt
+          printing
+          title="ASKBASE · VOID"
+          question="SELECT * FROM pages WHERE url = this one"
+          lines={[]}
+          footer={[
+            ["rows returned", "0"],
+            ["status", "404"],
+          ]}
+        >
+          <p className="my-4 text-center text-[2.6em] font-semibold tracking-[0.25em] text-[#d92d20]">
+            VOID
+          </p>
+          <p className="text-center uppercase leading-snug">
+            That page doesn't exist. The query came back empty.
+          </p>
+        </Receipt>
         <Link
           to="/"
-          className="mt-8 inline-flex rounded-full bg-ink px-5 py-3 text-sm font-medium text-bg"
+          className="mx-auto mt-8 block w-fit rounded-full bg-ink px-5 py-3 text-sm font-medium text-bg"
         >
           Back home
         </Link>
